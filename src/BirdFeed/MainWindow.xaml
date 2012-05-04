@@ -12,12 +12,17 @@
             </LinearGradientBrush.GradientStops>
         </LinearGradientBrush>
 
-        <SolidColorBrush x:Key="TextBrush" Color="#333333" />
+        <SolidColorBrush x:Key="TextBrush" Color="#888888" />
         <SolidColorBrush x:Key="HighlightBrush" Color="#4099FF" />
         
         <Style TargetType="TextBlock" x:Key="ScreenName">
             <Setter Property="FontSize" Value="60" />
             <Setter Property="Foreground" Value="{StaticResource HighlightBrush}" />
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="UserName">
+            <Setter Property="FontSize" Value="36" />
+            <Setter Property="Foreground" Value="#888888" />
         </Style>
 
         <Style TargetType="TextBlock" >
@@ -68,9 +73,12 @@
                Grid.RowSpan="2" 
                HorizontalAlignment="Center" VerticalAlignment="Center"
                Width="175" Height="175" />
-                
-        <TextBlock Text="{Binding CurrentTweet.ScreenName}" Grid.Column="2" Grid.Row="1" Style="{StaticResource ScreenName}" VerticalAlignment="Center" />
-                
+
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" Grid.Column="2" Grid.Row="1" >
+            <TextBlock Text="{Binding CurrentTweet.ScreenName}" Style="{StaticResource ScreenName}" VerticalAlignment="Bottom" />
+            <TextBlock Text="{Binding CurrentTweet.Name}" Margin="20,0,0,5" Style="{StaticResource UserName}" VerticalAlignment="Bottom" />
+        </StackPanel>
+
         <StackPanel Orientation="Vertical" 
                     VerticalAlignment="Stretch" 
                     HorizontalAlignment="Stretch"

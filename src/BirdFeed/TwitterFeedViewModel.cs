@@ -81,7 +81,6 @@ namespace BirdFeed
         private void AppendTweetsAndDisplay(TwitterSearchResult result, TwitterResponse response)
         {
             AppendTweets(result, response);
-            DisplayNextTweet();
         }
 
         private void AppendTweets(TwitterSearchResult result, TwitterResponse response)

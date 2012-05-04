@@ -30,24 +30,19 @@ namespace BirdFeed
                 return false;
             }
 
+            field = value;
+
             var vmExpression = body.Expression as ConstantExpression;
             if (vmExpression != null)
             {
-
                 LambdaExpression lambda = Expression.Lambda(vmExpression);
                 Delegate vmFunc = lambda.Compile();
                 object sender = vmFunc.DynamicInvoke();
                 if (PropertyChanged != null)
                 {
-
-                    PropertyChanged(sender,
-
-                    new PropertyChangedEventArgs(body.Member.Name));
+                    PropertyChanged(sender, new PropertyChangedEventArgs(body.Member.Name));
                 }
-
-            }
-
-            field = value;
+            }            
 
             return true;
         }

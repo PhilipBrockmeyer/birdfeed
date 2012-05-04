@@ -25,7 +25,7 @@ namespace BirdFeed.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#MaybeIshould")]
+        [global::System.Configuration.DefaultSettingValueAttribute("PBrockmeyer")]
         public string SearchTerm {
             get {
                 return ((string)(this["SearchTerm"]));

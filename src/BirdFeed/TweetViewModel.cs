@@ -31,6 +31,13 @@ namespace BirdFeed
             set { ChangeAndNotify(ref _screenName, value, () => ScreenName); }
         }
 
+        private String _name;
+        public String Name
+        {
+            get { return _name; }
+            set { ChangeAndNotify(ref _name, value, () => Name); }
+        }
+
         private String _time;
         public String Time 
         {
@@ -51,6 +58,7 @@ namespace BirdFeed
         public void SetData(TwitterSearchStatus status)
         {
             this.ScreenName = status.Author.ScreenName;
+            this.Name = status.FromUserName;
 
             SetUserImage(status);
             SetPicture(status);
