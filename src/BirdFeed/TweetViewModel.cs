@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Media.Imaging;
 using System.Collections.ObjectModel;
 using TweetSharp;
+using System.Net;
 
 namespace BirdFeed
 {
@@ -49,14 +50,7 @@ namespace BirdFeed
 
         private readonly ObservableCollection<TextSegment> _text = new ObservableCollection<TextSegment>();
         public ObservableCollection<TextSegment> Text { get { return _text; } }
-        private String _textSource;
-        public String TextSource
-        {
-
-            get { return _textSource; }
-            set { ChangeAndNotify(ref _textSource, value, () => TextSource); }
-        }
-
+  
         public void SetData(TwitterSearchStatus status)
         {
             this._status = status;
@@ -74,7 +68,6 @@ namespace BirdFeed
         {
             Text.Clear();
             Int32 entityIndex = 0;
-            TextSource = status.Text;
 
             if (status.Entities == null)
             {
@@ -85,29 +78,28 @@ namespace BirdFeed
             if (status.Entities.Any())
             {
                 var entities = status.Entities.OrderBy(x => x.StartIndex);
-                Text.Add(
+                Text.Add(new TextSegment() { Text = WebUtility.HtmlDecode(status.Text.Substring(0, entities.First().StartIndex)) });
 
-                new TextSegment() { Text = status.Text.Substring(0, entities.First().StartIndex) });
                 foreach (var entity in entities)
                 {
-                    Text.Add(new TextSegment { Text = status.Text.Substring(entity.StartIndex, entity.EndIndex - entity.StartIndex), IsHighlighted = true });
+                    Text.Add(new TextSegment { Text = WebUtility.HtmlDecode(status.Text.Substring(entity.StartIndex, entity.EndIndex - entity.StartIndex)), IsHighlighted = true });
                     entityIndex++;
 
                     if (entities.Count() > entityIndex)
                     {
                         var nextEntity = entities.ElementAt(entityIndex);
                         var distance = nextEntity.StartIndex - entity.EndIndex;
-                        Text.Add(new TextSegment() { Text = status.Text.Substring(entity.EndIndex, distance) });
+                        Text.Add(new TextSegment() { Text = WebUtility.HtmlDecode(status.Text.Substring(entity.EndIndex, distance)) });
                     }
                     else
                     {
-                        Text.Add(new TextSegment() { Text = status.Text.Substring(entity.EndIndex, status.Text.Length - entity.EndIndex) });
+                        Text.Add(new TextSegment() { Text = WebUtility.HtmlDecode(status.Text.Substring(entity.EndIndex, status.Text.Length - entity.EndIndex)) });
                     }
                 }
             }
             else
             {
-                Text.Add(new TextSegment { Text = status.Text });
+                Text.Add(new TextSegment { Text = WebUtility.HtmlDecode(status.Text) });
             }
         }
 
