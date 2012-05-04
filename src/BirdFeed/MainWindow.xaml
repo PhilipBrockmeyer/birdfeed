@@ -56,11 +56,11 @@
         <Grid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="3" Background="Black" />        
         <Grid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="3" Background="White" Margin="1"/>        
         
-        <TextBlock Text="{Binding SearchTerm}" Foreground="White" FontFamily="Segoe UI" VerticalAlignment="Center" Margin="10, 0, 0, 0" Grid.ColumnSpan="3"/>
-
         <Grid Background="Black" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="177" Height="177" />
         <Grid Background="White" Grid.Column="1" Grid.Row="1" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="176" Height="176" />
-        
+
+        <TextBlock Text="{Binding SearchTerm}" Foreground="White" FontFamily="Segoe UI" VerticalAlignment="Center" Margin="25, 0, 0, 0" Grid.ColumnSpan="3"/>
+
         <Image Source="{Binding CurrentTweet.UserImage}" 
                Stretch="Uniform" 
                Grid.Column="1"  
@@ -78,8 +78,12 @@
                     Grid.Row="2" 
                     Grid.RowSpan="1">
             <ContentControl  x:Name="tweetContent" Margin="0,0,100,0" />
-            <TextBlock Text="{Binding CurrentTweet.Time}"  FontSize="20" />
+            <StackPanel Orientation="Horizontal" >
+                <Image VerticalAlignment="Center" Source="images/bird_48_blue.png" Height="48" Width="48" Margin="10" />
+                <TextBlock Text="{Binding CurrentTweet.Time}"  VerticalAlignment="Center" FontSize="20" />
+            </StackPanel>
         </StackPanel>
+        
         <Image Source="{Binding CurrentTweet.Picture}" 
                Stretch="Uniform" 
                Grid.Column="1" 
