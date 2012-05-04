@@ -11,6 +11,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Media.Animation;
+using System.Windows.Threading;
+using BirdFeed.Properties;
 
 namespace BirdFeed
 {
@@ -19,25 +22,30 @@ namespace BirdFeed
     /// </summary>
     public partial class MainWindow : Window
     {
+        Storyboard _fadeOut;            
+            
+
         public MainWindow()
         {
             InitializeComponent();
 
-            this.DataContextChanged += new DependencyPropertyChangedEventHandler(MainWindow_DataContextChanged);
+            this._fadeOut = (Storyboard)this.Resources["FadeOut"];
+            this._fadeOut.Completed += new EventHandler(_fadeOut_Completed);
 
+            new DispatcherTimer(TimeSpan.FromSeconds(Settings.Default.TweetDuration), DispatcherPriority.Normal, Update, this.Dispatcher);
         }
 
-        void MainWindow_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+
+        private void Update(Object sender, EventArgs e)
         {
-            ((TwitterFeedViewModel)e.NewValue).PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(MainWindow_PropertyChanged);
+            this._fadeOut.Begin();
         }
 
-        void MainWindow_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        void _fadeOut_Completed(object sender, EventArgs e)
         {
-            if (e.PropertyName != "CurrentTweet")
-                return;
-
             var viewModel = this.DataContext as TwitterFeedViewModel;
+
+            viewModel.DisplayNextTweet();
 
             if (viewModel.CurrentTweet == null)
                 return;
@@ -46,14 +54,18 @@ namespace BirdFeed
 
             foreach (var segment in viewModel.CurrentTweet.Text)
             {
-                textBlock.Inlines.Add(new Run 
-                    { 
-                        Text = segment.Text, 
-                        Foreground = segment.IsHighlighted ? (Brush)this.Resources["HighlightBrush"] : (Brush)this.Resources["TextBrush"]
-                    });
+                textBlock.Inlines.Add(new Run
+                {
+                    Text = segment.Text,
+                    Foreground = segment.IsHighlighted ? (Brush)this.Resources["HighlightBrush"] : (Brush)this.Resources["TextBrush"]
+                });
             }
 
             this.tweetContent.Content = textBlock;
+            
+            var sb = (Storyboard)this.Resources["FadeIn"];
+            sb.Begin();
+
         }
     }
 }

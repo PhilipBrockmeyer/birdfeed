@@ -24,7 +24,6 @@ namespace BirdFeed
 
                 return _instance;
             }
-
         }
 
         private CircularQueue<TweetViewModel> _queue;
@@ -64,7 +63,6 @@ namespace BirdFeed
 
             AddInitialItems(Settings.Default.HistorySize);
 
-            new DispatcherTimer(TimeSpan.FromSeconds(Settings.Default.TweetDuration), DispatcherPriority.Normal, Update, this._dispatcher);
             new DispatcherTimer(TimeSpan.FromSeconds(15.0), DispatcherPriority.Normal, Retrieve, this._dispatcher);
 
             this._isInitialized = true;
@@ -90,18 +88,11 @@ namespace BirdFeed
         {
             this._dispatcher.BeginInvoke((Action)(() =>
             {
-                try
+                foreach (var status in result.Statuses)
                 {
-                    foreach (var status in result.Statuses)
-                    {
-                        var tweet = new TweetViewModel();
-                        tweet.SetData(status);
-                        this._queue.Add(tweet);
-                    }
-                }
-                catch (ArgumentException)
-                {
-                    throw;
+                    var tweet = new TweetViewModel();
+                    tweet.SetData(status);
+                    this._queue.Add(tweet);
                 }
 
                 this._lastId = result.MaxId;
@@ -114,16 +105,11 @@ namespace BirdFeed
             this._service.IncludeEntities = true;
         }
 
-        private void Update(Object sender, EventArgs e)
-        {
-            DisplayNextTweet();
-        }
-
-        private void DisplayNextTweet()
+        public void DisplayNextTweet()
         {
             if (!_items.MoveNext())
                 return;
-
+            
             this.CurrentTweet = this._items.Current;
         }
     }

@@ -112,6 +112,9 @@ namespace BirdFeed
 
         private void SetPicture(TwitterSearchStatus status)
         {
+            if (status.Entities == null)
+                return;
+
             if (status.Entities.Media.Any())
             {
                 var img = new BitmapImage();
