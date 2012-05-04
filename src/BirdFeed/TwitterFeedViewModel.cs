@@ -10,11 +10,29 @@ namespace BirdFeed
 {
     public class TwitterFeedViewModel : ViewModel
     {
+        private static Object lockObject = new Object();
+        private static TwitterFeedViewModel _instance;
+        public static TwitterFeedViewModel Instance
+        {
+            get
+            {
+                lock(lockObject)
+                {
+                    if (_instance == null)
+                        _instance = new TwitterFeedViewModel();
+                }
+
+                return _instance;
+            }
+
+        }
+
         private CircularQueue<TweetViewModel> _queue;
         private IEnumerator<TweetViewModel> _items;
         private TwitterService _service;
         private Int64 _lastId;
         private Dispatcher _dispatcher;
+        private Boolean _isInitialized = false;
 
         private TweetViewModel _currentTweet;
         public TweetViewModel CurrentTweet
@@ -32,6 +50,9 @@ namespace BirdFeed
 
         public void Initialize(Dispatcher dispatcher)
         {
+            if (this._isInitialized)
+                return;
+
             this._dispatcher = dispatcher;
 
             AnonymousAccess();
@@ -40,6 +61,8 @@ namespace BirdFeed
             
             new DispatcherTimer(TimeSpan.FromSeconds(10.0), DispatcherPriority.Normal, Update, this._dispatcher);
             new DispatcherTimer(TimeSpan.FromSeconds(15.0), DispatcherPriority.Normal, Retrieve, this._dispatcher);
+
+            this._isInitialized = true;
         }
 
         private void AddInitialItems(Int32 count)
@@ -64,7 +87,6 @@ namespace BirdFeed
             {
                 this._dispatcher.BeginInvoke((Action)(() =>
                 {
-
                     var tweet = new TweetViewModel();
                     tweet.SetData(status);
 
