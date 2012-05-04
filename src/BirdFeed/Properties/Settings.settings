@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="SearchTerm" Type="System.String" Scope="User">
-      <Value Profile="(Default)">PBrockmeyer</Value>
+      <Value Profile="(Default)">#cfl</Value>
     </Setting>
     <Setting Name="TweetDuration" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">10</Value>

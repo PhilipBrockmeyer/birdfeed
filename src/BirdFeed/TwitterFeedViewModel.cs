@@ -108,7 +108,9 @@ namespace BirdFeed
         {
             if (!_items.MoveNext())
                 return;
-            
+
+
+            this._items.Current.UpdateTime();
             this.CurrentTweet = this._items.Current;
         }
     }
