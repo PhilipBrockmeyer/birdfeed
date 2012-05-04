@@ -104,6 +104,7 @@ namespace BirdFeed
         {
             var img = new BitmapImage();
             img.BeginInit();
+            img.CreateOptions |= BitmapCreateOptions.IgnoreColorProfile;
             img.UriSource = new Uri(status.Author.ProfileImageUrl, UriKind.Absolute);
             img.EndInit();
             this.UserImage = img;
@@ -115,6 +116,7 @@ namespace BirdFeed
             {
                 var img = new BitmapImage();
                 img.BeginInit();
+                img.CreateOptions |= BitmapCreateOptions.IgnoreColorProfile;
                 img.UriSource = new Uri(status.Entities.Media.First().MediaUrl, UriKind.Absolute);
                 img.EndInit();
                 this.Picture = img;

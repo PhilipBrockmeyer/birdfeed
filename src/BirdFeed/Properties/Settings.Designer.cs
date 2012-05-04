@@ -25,7 +25,7 @@ namespace BirdFeed.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Jason Kidd")]
+        [global::System.Configuration.DefaultSettingValueAttribute("@cinnamonlatte87")]
         public string SearchTerm {
             get {
                 return ((string)(this["SearchTerm"]));
@@ -37,7 +37,7 @@ namespace BirdFeed.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
         public int TweetDuration {
             get {
                 return ((int)(this["TweetDuration"]));
@@ -49,7 +49,7 @@ namespace BirdFeed.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
         public int HistorySize {
             get {
                 return ((int)(this["HistorySize"]));

@@ -3,13 +3,13 @@
   <Profiles />
   <Settings>
     <Setting Name="SearchTerm" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Jason Kidd</Value>
+      <Value Profile="(Default)">@cinnamonlatte87</Value>
     </Setting>
     <Setting Name="TweetDuration" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="HistorySize" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">5</Value>
+      <Value Profile="(Default)">10</Value>
     </Setting>
   </Settings>
 </SettingsFile>
