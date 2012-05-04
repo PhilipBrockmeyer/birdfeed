@@ -53,6 +53,13 @@
             <ContentControl  x:Name="tweetContent" Margin="0,0,100,0" />
             <TextBlock Text="{Binding CurrentTweet.Time}"  FontSize="20" />
         </StackPanel>
-        <Image Source="{Binding CurrentTweet.Picture}" Stretch="Uniform" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" HorizontalAlignment="Center" />
+        <Image Source="{Binding CurrentTweet.Picture}" 
+               Stretch="Uniform" 
+               Grid.Column="1" 
+               Grid.ColumnSpan="2" 
+               Grid.Row="3" 
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Center"
+               Margin="0,0,10,0"/>
     </Grid>
 </Window>
