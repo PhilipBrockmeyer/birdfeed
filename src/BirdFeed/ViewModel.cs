@@ -12,10 +12,8 @@ namespace BirdFeed
         public event PropertyChangedEventHandler PropertyChanged;
         public Boolean ChangeAndNotify<T>(ref T field, T value, Expression<Func<T>> memberExpression)
         {
-
             if (memberExpression == null)
             {
-
                 throw new ArgumentNullException("memberExpression");
             }
 

@@ -27,18 +27,24 @@ namespace BirdFeed
         {
             this._queue = new CircularQueue<TweetViewModel>(10);
             this._items = this._queue.GetEnumerator();
-            this._dispatcher = Dispatcher.CurrentDispatcher;
+            this._dispatcher = Dispatcher.CurrentDispatcher;            
+        }
+
+        public void Initialize(Dispatcher dispatcher)
+        {
+            this._dispatcher = dispatcher;
+
             AnonymousAccess();
 
             AddInitialItems(10);
-
+            
             new DispatcherTimer(TimeSpan.FromSeconds(10.0), DispatcherPriority.Normal, Update, this._dispatcher);
             new DispatcherTimer(TimeSpan.FromSeconds(15.0), DispatcherPriority.Normal, Retrieve, this._dispatcher);
         }
 
         private void AddInitialItems(Int32 count)
         {
-            this._service.Search(Settings.Default.SearchTerm, count, TwitterSearchResultType.Recent, AppendTweets);
+            var result = this._service.Search(Settings.Default.SearchTerm, count, TwitterSearchResultType.Recent, AppendTweetsAndDisplay);            
         }
 
         private void Retrieve(Object sender, EventArgs e)
@@ -46,11 +52,16 @@ namespace BirdFeed
             this._service.SearchSince(this._lastId, Settings.Default.SearchTerm, TwitterSearchResultType.Recent, AppendTweets);
         }
 
+        private void AppendTweetsAndDisplay(TwitterSearchResult result, TwitterResponse response)
+        {
+            AppendTweets(result, response);
+            DisplayNextTweet();
+        }
+
         private void AppendTweets(TwitterSearchResult result, TwitterResponse response)
         {
             foreach (var status in result.Statuses)
             {
-
                 this._dispatcher.BeginInvoke((Action)(() =>
                 {
 
@@ -73,7 +84,11 @@ namespace BirdFeed
 
         private void Update(Object sender, EventArgs e)
         {
+            DisplayNextTweet();
+        }
 
+        private void DisplayNextTweet()
+        {
             if (!_items.MoveNext())
                 return;
 

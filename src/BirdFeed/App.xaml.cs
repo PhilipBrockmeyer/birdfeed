@@ -12,5 +12,14 @@ namespace BirdFeed
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnActivated(EventArgs e)
+        {
+            base.OnActivated(e);
+
+            var viewModel = new TwitterFeedViewModel();
+            viewModel.Initialize(this.MainWindow.Dispatcher);
+
+            this.MainWindow.DataContext = viewModel;
+        }
     }
 }
