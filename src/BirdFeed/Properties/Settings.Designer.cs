@@ -34,5 +34,29 @@ namespace BirdFeed.Properties {
                 this["SearchTerm"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int TweetDuration {
+            get {
+                return ((int)(this["TweetDuration"]));
+            }
+            set {
+                this["TweetDuration"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        public int HistorySize {
+            get {
+                return ((int)(this["HistorySize"]));
+            }
+            set {
+                this["HistorySize"] = value;
+            }
+        }
     }
 }

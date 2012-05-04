@@ -22,10 +22,38 @@ namespace BirdFeed
         public MainWindow()
         {
             InitializeComponent();
+
+            this.DataContextChanged += new DependencyPropertyChangedEventHandler(MainWindow_DataContextChanged);
+
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        void MainWindow_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
+            ((TwitterFeedViewModel)e.NewValue).PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(MainWindow_PropertyChanged);
+        }
+
+        void MainWindow_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != "CurrentTweet")
+                return;
+
+            var viewModel = this.DataContext as TwitterFeedViewModel;
+
+            if (viewModel.CurrentTweet == null)
+                return;
+
+            var textBlock = new TextBlock() { TextWrapping = TextWrapping.Wrap };
+
+            foreach (var segment in viewModel.CurrentTweet.Text)
+            {
+                textBlock.Inlines.Add(new Run 
+                    { 
+                        Text = segment.Text, 
+                        Foreground = segment.IsHighlighted ? (Brush)this.Resources["HighlightBrush"] : (Brush)this.Resources["TextBrush"]
+                    });
+            }
+
+            this.tweetContent.Content = textBlock;
         }
     }
 }

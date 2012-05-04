@@ -16,7 +16,7 @@ namespace BirdFeed
         {
             get
             {
-                lock(lockObject)
+                lock (lockObject)
                 {
                     if (_instance == null)
                         _instance = new TwitterFeedViewModel();
@@ -41,11 +41,16 @@ namespace BirdFeed
             set { ChangeAndNotify(ref this._currentTweet, value, () => CurrentTweet); }
         }
 
+        public String SearchTerm
+        {
+            get { return Settings.Default.SearchTerm; }
+        }
+
         public TwitterFeedViewModel()
         {
-            this._queue = new CircularQueue<TweetViewModel>(10);
+            this._queue = new CircularQueue<TweetViewModel>(Settings.Default.HistorySize);
             this._items = this._queue.GetEnumerator();
-            this._dispatcher = Dispatcher.CurrentDispatcher;            
+            this._dispatcher = Dispatcher.CurrentDispatcher;
         }
 
         public void Initialize(Dispatcher dispatcher)
@@ -57,9 +62,9 @@ namespace BirdFeed
 
             AnonymousAccess();
 
-            AddInitialItems(10);
-            
-            new DispatcherTimer(TimeSpan.FromSeconds(10.0), DispatcherPriority.Normal, Update, this._dispatcher);
+            AddInitialItems(Settings.Default.HistorySize);
+
+            new DispatcherTimer(TimeSpan.FromSeconds(Settings.Default.TweetDuration), DispatcherPriority.Normal, Update, this._dispatcher);
             new DispatcherTimer(TimeSpan.FromSeconds(15.0), DispatcherPriority.Normal, Retrieve, this._dispatcher);
 
             this._isInitialized = true;
@@ -67,7 +72,7 @@ namespace BirdFeed
 
         private void AddInitialItems(Int32 count)
         {
-            var result = this._service.Search(Settings.Default.SearchTerm, count, TwitterSearchResultType.Recent, AppendTweetsAndDisplay);            
+            var result = this._service.Search(Settings.Default.SearchTerm, count, TwitterSearchResultType.Recent, AppendTweetsAndDisplay);
         }
 
         private void Retrieve(Object sender, EventArgs e)
@@ -83,19 +88,17 @@ namespace BirdFeed
 
         private void AppendTweets(TwitterSearchResult result, TwitterResponse response)
         {
-            foreach (var status in result.Statuses)
+            this._dispatcher.BeginInvoke((Action)(() =>
             {
-                this._dispatcher.BeginInvoke((Action)(() =>
+                foreach (var status in result.Statuses)
                 {
                     var tweet = new TweetViewModel();
                     tweet.SetData(status);
-
                     this._queue.Add(tweet);
-                }));
+                }
 
-            }
-
-            this._lastId = result.MaxId;
+                this._lastId = result.MaxId;
+            }));
         }
 
         private void AnonymousAccess()
