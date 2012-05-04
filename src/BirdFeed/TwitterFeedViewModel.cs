@@ -90,11 +90,18 @@ namespace BirdFeed
         {
             this._dispatcher.BeginInvoke((Action)(() =>
             {
-                foreach (var status in result.Statuses)
+                try
                 {
-                    var tweet = new TweetViewModel();
-                    tweet.SetData(status);
-                    this._queue.Add(tweet);
+                    foreach (var status in result.Statuses)
+                    {
+                        var tweet = new TweetViewModel();
+                        tweet.SetData(status);
+                        this._queue.Add(tweet);
+                    }
+                }
+                catch (ArgumentException)
+                {
+                    throw;
                 }
 
                 this._lastId = result.MaxId;

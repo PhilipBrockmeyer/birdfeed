@@ -17,6 +17,13 @@ namespace BirdFeed
             set { ChangeAndNotify(ref _userImage, value, () => UserImage); }
         }
 
+        private BitmapImage _picture;
+        public BitmapImage Picture
+        {
+            get { return _picture; }
+            set { ChangeAndNotify(ref _picture, value, () => Picture); }
+        }
+
         private String _screenName;
         public String ScreenName
         {
@@ -36,10 +43,10 @@ namespace BirdFeed
 
         public void SetData(TwitterSearchStatus status)
         {
-
             this.ScreenName = status.Author.ScreenName;
 
-            SetImage(status);
+            SetUserImage(status);
+            SetPicture(status);
             SetText(status);
         }
 
@@ -69,8 +76,7 @@ namespace BirdFeed
                     if (entities.Count() > entityIndex)
                     {
                         var nextEntity = entities.ElementAt(entityIndex);
-                        var
-                        distance = nextEntity.StartIndex - entity.EndIndex;
+                        var distance = nextEntity.StartIndex - entity.EndIndex;
                         Text.Add(new TextSegment() { Text = status.Text.Substring(entity.EndIndex, distance) });
                     }
                     else
@@ -85,13 +91,25 @@ namespace BirdFeed
             }
         }
 
-        private void SetImage(TwitterSearchStatus status)
+        private void SetUserImage(TwitterSearchStatus status)
         {
             var img = new BitmapImage();
             img.BeginInit();
             img.UriSource = new Uri(status.Author.ProfileImageUrl, UriKind.Absolute);
             img.EndInit();
             this.UserImage = img;
+        }
+
+        private void SetPicture(TwitterSearchStatus status)
+        {
+            if (status.Entities.Media.Any())
+            {
+                var img = new BitmapImage();
+                img.BeginInit();
+                img.UriSource = new Uri(status.Entities.Media.First().MediaUrl, UriKind.Absolute);
+                img.EndInit();
+                this.Picture = img;
+            }
         }
     }
 }

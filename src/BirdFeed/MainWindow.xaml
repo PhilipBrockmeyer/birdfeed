@@ -9,7 +9,7 @@
         <SolidColorBrush x:Key="HighlightBrush" Color="#4099FF" />
         
         <Style TargetType="TextBlock" x:Key="ScreenName">
-            <Setter Property="FontSize" Value="64" />
+            <Setter Property="FontSize" Value="60" />
             <Setter Property="Foreground" Value="{StaticResource HighlightBrush}" />
         </Style>
 
@@ -20,27 +20,31 @@
     
     <Grid Background="{StaticResource BackgroundBrush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.25*" />            
+            <ColumnDefinition Width="0.15*" />            
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="0.25*" />
+            <ColumnDefinition Width="0.15*" />
         </Grid.ColumnDefinitions>
         
         <Grid.RowDefinitions>
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="1.5*" />
             <RowDefinition Height="1.5*" />
             <RowDefinition Height="3*"/>
-            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="4*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
+        <Grid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="4" Background="Black" />        
+        <Grid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="4" Background="White" Margin="5"/>        
         
-        <Grid Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="5" Background="White" />        
-        
-        <TextBlock Text="{Binding SearchTerm}" Foreground="White" VerticalAlignment="Center" />
+        <TextBlock Text="{Binding SearchTerm}" Foreground="White" FontFamily="Segoe UI" VerticalAlignment="Center" Margin="10, 0, 0, 0" Grid.ColumnSpan="3"/>
+
+        <Grid Background="Black" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Margin="48" />
         <Image Source="{Binding CurrentTweet.UserImage}" Stretch="Uniform" Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" Margin="50" />
         <TextBlock Text="{Binding CurrentTweet.ScreenName}" Grid.Column="2" Grid.Row="1" Style="{StaticResource ScreenName}" VerticalAlignment="Center" />
         <ContentControl Grid.Column="2" Grid.Row="2" Grid.RowSpan="2" x:Name="tweetContent" Margin="0,0,100,0" />
+        
+        <Image Source="{Binding CurrentTweet.Picture}" Stretch="Uniform" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="4" HorizontalAlignment="Center" />
     </Grid>
 </Window>
