@@ -65,13 +65,15 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CircularQueue.cs" />
+    <Compile Include="Command.cs" />
     <Compile Include="Extensions.cs" />
-    <Compile Include="TextSegment.cs" />
-    <Compile Include="TweetViewModel.cs" />
-    <Compile Include="TwitterFeedViewModel.cs">
+    <Compile Include="ViewModels\BirdFeedViewModel.cs" />
+    <Compile Include="ViewModels\TextSegment.cs" />
+    <Compile Include="ViewModels\TweetViewModel.cs" />
+    <Compile Include="ViewModels\TwitterFeedViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModel.cs" />
+    <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Views\TweetView.xaml.cs">
       <DependentUpon>TweetView.xaml</DependentUpon>
     </Compile>

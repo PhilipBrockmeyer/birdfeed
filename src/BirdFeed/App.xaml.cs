@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Windows;
+using BirdFeed.ViewModels;
 
 namespace BirdFeed
 {
@@ -16,8 +17,8 @@ namespace BirdFeed
         {
             base.OnActivated(e);
 
-            var viewModel = TwitterFeedViewModel.Instance;
-            viewModel.Initialize(this.MainWindow.Dispatcher);
+            var viewModel = new BirdFeedViewModel();
+            viewModel.TwitterFeed.Initialize(this.MainWindow.Dispatcher);
 
             this.MainWindow.DataContext = viewModel;
         }

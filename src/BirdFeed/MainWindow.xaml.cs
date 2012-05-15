@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Windows.Media.Animation;
 using System.Windows.Threading;
 using BirdFeed.Properties;
+using BirdFeed.ViewModels;
 
 namespace BirdFeed
 {
@@ -26,6 +27,16 @@ namespace BirdFeed
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            var viewModel = this.DataContext as BirdFeedViewModel;
+
+            if (viewModel == null)
+                return;
+
+            viewModel.ExecuteKeyboardTrigger(e.Key);
         }  
     }
 }
