@@ -14,10 +14,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Windows.Media.Animation;
 using BirdFeed.Properties;
-<<<<<<< HEAD
 using BirdFeed.ViewModels;
-=======
->>>>>>> 6f0c4c9252c5ea1f6271a7f369f3e5f0d46eac89
 
 namespace BirdFeed.Views
 {
@@ -41,6 +38,9 @@ namespace BirdFeed.Views
 
         private void Update(Object sender, EventArgs e)
         {
+            if (this.DataContext == null)
+                return;
+
             this._fadeOut.Begin();
         }
 

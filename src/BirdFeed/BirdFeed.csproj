@@ -65,15 +65,21 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CircularQueue.cs" />
-    <Compile Include="Command.cs" />
+    <Compile Include="ContentViewSelector.cs" />
     <Compile Include="Extensions.cs" />
+    <Compile Include="RandomValueSelector.cs" />
     <Compile Include="ViewModels\BirdFeedViewModel.cs" />
+    <Compile Include="Commands\RandomValueSelectorCommand.cs" />
+    <Compile Include="ViewModels\RandomValueSelectorViewModel.cs" />
     <Compile Include="ViewModels\TextSegment.cs" />
     <Compile Include="ViewModels\TweetViewModel.cs" />
     <Compile Include="ViewModels\TwitterFeedViewModel.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\ViewModel.cs" />
+    <Compile Include="Views\RandomValueSelectorView.xaml.cs">
+      <DependentUpon>RandomValueSelectorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TweetView.xaml.cs">
       <DependentUpon>TweetView.xaml</DependentUpon>
     </Compile>
@@ -89,6 +95,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\RandomValueSelectorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TweetView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

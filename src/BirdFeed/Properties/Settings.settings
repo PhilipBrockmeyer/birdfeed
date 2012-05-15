@@ -2,14 +2,20 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="BirdFeed.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="SearchTerm" Type="System.String" Scope="User">
-      <Value Profile="(Default)">#nhl</Value>
-    </Setting>
     <Setting Name="TweetDuration" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="HistorySize" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="SearchTerm" Type="System.String" Scope="User">
+      <Value Profile="(Default)">pbrockmeyer</Value>
+    </Setting>
+    <Setting Name="RandomValues" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1; 2; 3; 4; 5; 6; 7; 8; 9; 10</Value>
+    </Setting>
+    <Setting Name="RandomValueSeparator" Type="System.Char" Scope="User">
+      <Value Profile="(Default)">;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

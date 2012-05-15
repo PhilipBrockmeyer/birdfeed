@@ -17,7 +17,7 @@ namespace BirdFeed
         {
             base.OnActivated(e);
 
-            var viewModel = new BirdFeedViewModel();
+            var viewModel = BirdFeedViewModel.Instance;
             viewModel.TwitterFeed.Initialize(this.MainWindow.Dispatcher);
 
             this.MainWindow.DataContext = viewModel;
