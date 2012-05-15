@@ -22,50 +22,10 @@ namespace BirdFeed
     /// </summary>
     public partial class MainWindow : Window
     {
-        Storyboard _fadeOut;            
-            
 
         public MainWindow()
         {
             InitializeComponent();
-
-            this._fadeOut = (Storyboard)this.Resources["FadeOut"];
-            this._fadeOut.Completed += new EventHandler(_fadeOut_Completed);
-
-            new DispatcherTimer(TimeSpan.FromSeconds(Settings.Default.TweetDuration), DispatcherPriority.Normal, Update, this.Dispatcher);
-        }
-
-
-        private void Update(Object sender, EventArgs e)
-        {
-            this._fadeOut.Begin();
-        }
-
-        void _fadeOut_Completed(object sender, EventArgs e)
-        {
-            var viewModel = this.DataContext as TwitterFeedViewModel;
-
-            viewModel.DisplayNextTweet();
-
-            if (viewModel.CurrentTweet == null)
-                return;
-
-            var textBlock = new TextBlock() { TextWrapping = TextWrapping.Wrap };
-
-            foreach (var segment in viewModel.CurrentTweet.Text)
-            {
-                textBlock.Inlines.Add(new Run
-                {
-                    Text = segment.Text,
-                    Foreground = segment.IsHighlighted ? (Brush)this.Resources["HighlightBrush"] : (Brush)this.Resources["TextBrush"]
-                });
-            }
-
-            this.tweetContent.Content = textBlock;
-            
-            var sb = (Storyboard)this.Resources["FadeIn"];
-            sb.Begin();
-
-        }
+        }  
     }
 }

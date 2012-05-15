@@ -48,6 +48,13 @@ namespace BirdFeed
             set { ChangeAndNotify(ref _time, value, () => Time); }
         }
 
+        private Boolean _hasImage;
+        public Boolean HasImage
+        {
+            get { return _hasImage; }
+            set { ChangeAndNotify(ref _hasImage, value, () => HasImage); }
+        }
+
         private readonly ObservableCollection<TextSegment> _text = new ObservableCollection<TextSegment>();
         public ObservableCollection<TextSegment> Text { get { return _text; } }
   
@@ -57,6 +64,7 @@ namespace BirdFeed
 
             this.ScreenName = status.Author.ScreenName;
             this.Name = status.FromUserName;
+            this.HasImage = false;
 
             SetUserImage(status);
             SetPicture(status);
@@ -115,6 +123,8 @@ namespace BirdFeed
 
         private void SetPicture(TwitterSearchStatus status)
         {
+            this.HasImage = false;
+
             if (status.Entities == null)
                 return;
 
@@ -126,6 +136,7 @@ namespace BirdFeed
                 img.UriSource = new Uri(status.Entities.Media.First().MediaUrl, UriKind.Absolute);
                 img.EndInit();
                 this.Picture = img;
+                this.HasImage = true;
             }
         }
 
