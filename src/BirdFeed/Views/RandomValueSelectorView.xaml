@@ -14,7 +14,7 @@
         
         <Storyboard x:Key="selectionAnimation">
             <ColorAnimation BeginTime="0:0:0" Duration="0:0:1" From="#333333" To="#EEEEEE" Storyboard.TargetProperty="Background.Color" FillBehavior="HoldEnd" />
-            <ColorAnimation BeginTime="0:0:0" Duration="0:0:1" From="#AA3333" To="#333333" Storyboard.TargetProperty="BorderBrush.Color" FillBehavior="HoldEnd" />
+            <ColorAnimation BeginTime="0:0:0" Duration="0:0:1" From="#995555" To="#333333" Storyboard.TargetProperty="BorderBrush.Color" FillBehavior="HoldEnd" />
         </Storyboard>
 
         <Storyboard x:Key="selectedAnimation" Duration="0:0:3">
@@ -22,10 +22,10 @@
             <ColorAnimation BeginTime="0:0:0" Duration="0:0:2" From="#333333" To="#FF0000" Storyboard.TargetProperty="BorderBrush.Color" FillBehavior="HoldEnd" />
         </Storyboard>
 
-        <Storyboard x:Key="selectionCompleteAnimation" Duration="0:0:3.0">
+        <Storyboard x:Key="selectionCompleteAnimation" Duration="0:0:4.0">
             <DoubleAnimation BeginTime="0:0:0" Duration="0:0:1.0" From="0.0" To="1.0" Storyboard.TargetName="selectionGrid" Storyboard.TargetProperty="Opacity" />
             <DoubleAnimation BeginTime="0:0:0" Duration="0:0:1.0" From="128.0" To="900.0" Storyboard.TargetName="selectedValueText" Storyboard.TargetProperty="FontSize" />
-            <DoubleAnimation BeginTime="0:0:1.0" Duration="0:0:2.5" From="1.0" To="0.0" Storyboard.TargetName="selectedValueText" Storyboard.TargetProperty="Opacity" />
+            <DoubleAnimation BeginTime="0:0:2.0" Duration="0:0:3.5" From="1.0" To="0.0" Storyboard.TargetName="selectedValueTextGrid" Storyboard.TargetProperty="Opacity" />
         </Storyboard>
     </UserControl.Resources>
     
@@ -56,7 +56,9 @@
         </Grid>
         
         <Grid Grid.Row="0" Grid.RowSpan="2" Background="White" Opacity="0" x:Name="selectionGrid">
-            <TextBlock x:Name="selectedValueText" Text="{Binding SelectedValue}" Foreground="#888888" FontSize="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Grid x:Name="selectedValueTextGrid">
+                <TextBlock x:Name="selectedValueText" Text="{Binding SelectedValue}" Foreground="#888888" FontSize="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

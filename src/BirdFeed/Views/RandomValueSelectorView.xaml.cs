@@ -30,7 +30,7 @@ namespace BirdFeed.Views
         private Storyboard _selectedAnimation;
         private Storyboard _selectionCompleteAnimation;
         private Int32 _increment = 1;
-        private Int32 _initialRotations = 30;
+        private Int32 _initialRotations = 20;
 
         public RandomValueSelectorView()
         {
@@ -84,7 +84,7 @@ namespace BirdFeed.Views
             if (!this._viewModel.AvailableValues.Contains(this._viewModel.SelectedValue))
                 return;
 
-            this._initialRotations = 30;
+            this._initialRotations = 20;
             this._increment = 1;
             this._selectionTimer.Interval = TimeSpan.FromMilliseconds(50);
             this._selectionTimer.Start();
