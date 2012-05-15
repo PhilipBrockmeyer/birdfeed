@@ -14,6 +14,13 @@ namespace BirdFeed.ViewModels
 
         public ObservableCollection<String> AvailableValues { get; private set; }
 
+        private String _selectedValue;
+        public String SelectedValue
+        {
+            get { return _selectedValue; }
+            set { this.ChangeAndNotify(ref _selectedValue, value, () => SelectedValue); }
+        }
+
         public RandomValueSelectorViewModel(RandomValueSelector selector)
         {
             this._selector = selector;
@@ -22,7 +29,15 @@ namespace BirdFeed.ViewModels
 
         public void SelectValue()
         {
-            var selectedValue = this._selector.DrawValue();
+            this.SelectedValue = this._selector.DrawValue();
+        }
+
+        public void ValueSelectionCompleted()
+        {
+            this.AvailableValues.Remove(SelectedValue);
+
+            if (this.ValueSelected != null)
+                this.ValueSelected(this, new EventArgs());
         }
     }
 }

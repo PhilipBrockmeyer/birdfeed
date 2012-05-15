@@ -5,42 +5,58 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Grid.Resources>
-            <LinearGradientBrush x:Key="BorderBrush" StartPoint="0.5,0" EndPoint="0.5,2">
-                <LinearGradientBrush.GradientStops>
-                    <GradientStop Color="#01525d" Offset="0" />
-                    <GradientStop Color="Black" Offset="1" />
-                </LinearGradientBrush.GradientStops>
-            </LinearGradientBrush>
-            
-            <Style TargetType="TextBlock" x:Key="randomValueStyle">
-                <Setter Property="FontSize" Value="42" />
-                <Setter Property="Foreground" Value="#777777" />                
-            </Style>
-        </Grid.Resources>
+
+    <UserControl.Resources>
+        <Style TargetType="TextBlock" x:Key="randomValueStyle">
+            <Setter Property="FontSize" Value="42" />
+            <Setter Property="Foreground" Value="#777777" />
+        </Style>
         
+        <Storyboard x:Key="selectionAnimation">
+            <ColorAnimation BeginTime="0:0:0" Duration="0:0:1" From="#333333" To="#EEEEEE" Storyboard.TargetProperty="Background.Color" FillBehavior="HoldEnd" />
+            <ColorAnimation BeginTime="0:0:0" Duration="0:0:1" From="#AA3333" To="#333333" Storyboard.TargetProperty="BorderBrush.Color" FillBehavior="HoldEnd" />
+        </Storyboard>
+
+        <Storyboard x:Key="selectedAnimation" Duration="0:0:3">
+            <ColorAnimation BeginTime="0:0:0" Duration="0:0:2" From="#EEEEEE" To="#333333" Storyboard.TargetProperty="Background.Color" FillBehavior="HoldEnd" />
+            <ColorAnimation BeginTime="0:0:0" Duration="0:0:2" From="#333333" To="#FF0000" Storyboard.TargetProperty="BorderBrush.Color" FillBehavior="HoldEnd" />
+        </Storyboard>
+
+        <Storyboard x:Key="selectionCompleteAnimation" Duration="0:0:3.0">
+            <DoubleAnimation BeginTime="0:0:0" Duration="0:0:1.0" From="0.0" To="1.0" Storyboard.TargetName="selectionGrid" Storyboard.TargetProperty="Opacity" />
+            <DoubleAnimation BeginTime="0:0:0" Duration="0:0:1.0" From="128.0" To="900.0" Storyboard.TargetName="selectedValueText" Storyboard.TargetProperty="FontSize" />
+            <DoubleAnimation BeginTime="0:0:1.0" Duration="0:0:2.5" From="1.0" To="0.0" Storyboard.TargetName="selectedValueText" Storyboard.TargetProperty="Opacity" />
+        </Storyboard>
+    </UserControl.Resources>
+    
+    <Grid>        
         <Grid.RowDefinitions>
             <RowDefinition Height="100" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <TextBlock Text="next table" Style="{StaticResource randomValueStyle}" Margin="25" />
-        
-        <ItemsControl ItemsSource="{Binding AvailableValues}" Grid.Row="1">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+
+        <Grid Grid.Row="1">
+            <ItemsControl ItemsSource="{Binding AvailableValues}"  x:Name="items" >
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" x:Name="panel" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
             
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Border Margin="25" BorderBrush="{StaticResource BorderBrush}" Height="200" Width="200" BorderThickness="5" Background="#EEEEEE">
-                        <TextBlock Text="{Binding}" Style="{StaticResource randomValueStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                    </Border>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>       
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Margin="25" BorderBrush="#333333" Height="200" Width="200" BorderThickness="5" Background="#EEEEEE">
+                            <TextBlock Text="{Binding}" Style="{StaticResource randomValueStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+        
+        <Grid Grid.Row="0" Grid.RowSpan="2" Background="White" Opacity="0" x:Name="selectionGrid">
+            <TextBlock x:Name="selectedValueText" Text="{Binding SelectedValue}" Foreground="#888888" FontSize="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </Grid>
     </Grid>
 </UserControl>

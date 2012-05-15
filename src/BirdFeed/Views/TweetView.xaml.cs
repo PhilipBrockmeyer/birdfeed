@@ -23,6 +23,7 @@ namespace BirdFeed.Views
     /// </summary>
     public partial class TweetView : UserControl
     {
+        DispatcherTimer _timer;
         Storyboard _fadeOut;        
 
         public TweetView()
@@ -32,14 +33,16 @@ namespace BirdFeed.Views
             this._fadeOut = (Storyboard)this.Resources["FadeOut"];
             this._fadeOut.Completed += new EventHandler(_fadeOut_Completed);
 
-            new DispatcherTimer(TimeSpan.FromSeconds(Settings.Default.TweetDuration), DispatcherPriority.Normal, Update, this.Dispatcher);
+            this._timer = new DispatcherTimer(TimeSpan.FromMilliseconds(50), DispatcherPriority.Normal, Update, this.Dispatcher);
+            _fadeOut_Completed(this, new EventArgs());
         }
-
-
+        
         private void Update(Object sender, EventArgs e)
         {
             if (this.DataContext == null)
                 return;
+
+            this._timer.Interval = TimeSpan.FromSeconds(Settings.Default.TweetDuration);
 
             this._fadeOut.Begin();
         }
@@ -47,6 +50,9 @@ namespace BirdFeed.Views
         void _fadeOut_Completed(object sender, EventArgs e)
         {
             var viewModel = this.DataContext as TwitterFeedViewModel;
+
+            if (viewModel == null)
+                return;
 
             viewModel.DisplayNextTweet();
 

@@ -44,8 +44,6 @@
             <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>
 
-        <Image Source="../images/background.png" Stretch="Uniform" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="2" Grid.Column="1" Opacity="0.5" Margin="20" />
-
         <Grid Background="Black" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="177" Height="177" />
         <Grid Background="White" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="176" Height="176" />
         <Image Source="{Binding CurrentTweet.UserImage}" 
@@ -106,8 +104,6 @@
                 <RowDefinition Height="4*"/>
                 <RowDefinition Height="4*"/>
             </Grid.RowDefinitions>
-
-            <Image Source="../images/background.png" Stretch="Uniform" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="2" Opacity="0.5" Margin="20" />
         </Grid>
     </Grid>
 </UserControl>
